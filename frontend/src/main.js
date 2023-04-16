@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import "./index.css";
-import "fontawesome/"
+import "@fortawesome/fontawesome-free/css/all.min.css"
 
 import router from "./router";
 

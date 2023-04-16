@@ -1,21 +1,18 @@
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.contrib.auth.models import User
-from .serializers import UserSerializer
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from photography.models import User
 
-@api_view(['POST'])
+@csrf_exempt
 def register_user(request):
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        # Save user
-        user = User.objects.create_user(
-            username=serializer.validated_data['username'],
-            email=serializer.validated_data['email'],
-            password=serializer.validated_data['password'],
-            is_staff=serializer.validated_data.get('is_staff', False),
-            is_superuser=serializer.validated_data.get('is_superuser', False),
-        )
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        is_admin = request.POST.get('is_admin')
+
+        # create a new user object
+        user = User(username=username, email=email, password=password, is_admin=is_admin)
         user.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # return a JSON response indicating success
+        return JsonResponse({'success': True})

@@ -70,19 +70,20 @@ export default {
     const password = ref('')
     const isAdmin = ref(false)
 
-    const submitForm = async () => {
-      try {
-        const response = await axios.post('http://localhost:8000/api/users/', {
-          username: username.value,
-          email: email.value,
-          password: password.value,
-          is_admin: isAdmin.value,
-        })
-        console.log(response.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  const submitForm = async () => {
+  try {
+    const response = await axios.post('http://localhost:8000/api/users/', {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      is_admin: isAdmin.value,
+    })
+    console.log(response.data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 
     return {
       username,
