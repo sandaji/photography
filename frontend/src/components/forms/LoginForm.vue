@@ -80,28 +80,28 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import axios from 'axios'
 
 export default {
-  setup() {
-    const email = ref("");
-    const password = ref("");
-
-    const login = () => {
-      // Do login logic here
-      console.log(`Email: ${email.value}`);
-      console.log(`Password: ${password.value}`);
-      // show toast notification
-      window.Toast.fire({
-        icon: "success",
-        title: "Logged in successfully!",
-      });
-    };
+  name: 'Login',
+  data() {
     return {
-      email,
-      password,
-      login,
-    };
+      username: '',
+      password: ''
+    }
   },
-};
+  methods: {
+    async submitForm() {
+      try {
+        const response = await axios.get('http://localhost:8000/api/users/', {
+          username: this.username,
+          password: this.password
+        })
+        console.log(response.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+}
 </script>
